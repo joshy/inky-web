@@ -1,0 +1,20 @@
+[Unit]
+Description=Inky Picture Frame Web Interface
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+
+WorkingDirectory=/home/pi/inky-web
+
+ExecStart=/home/pi/.virtualenvs/pimoroni/bin/python /home/pi/inky-web/app.py
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+# The inky >= 2.6.0 pin is load-bearing, not cosmetic.
+#
+# inky 2.4.0 and earlier read the Spectra 6 13.3" BUSY line with inverted
+# polarity. BUSY is active-LOW (low = panel busy), but _busy_wait() treated
+# a low reading as "already idle" and returned immediately. That made
+# _update() send POF (panel power off) ~0.3s after DRF (refresh trigger),
+# so the refresh never completed: the web UI reported success while the
+# panel kept the previous image. Repeatedly cutting power mid-refresh can
+# also latch the panel into a fault state that only a full power removal
+# clears.
+#
+# 2.6.0 adds _refresh_wait(), which waits for BUSY to assert and then clear.
+inky>=2.6.0
+Flask>=3.0
+Pillow>=10.0
